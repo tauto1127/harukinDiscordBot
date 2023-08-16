@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 public class Program
 {
     private DiscordSocketClient _client;
+    private SocketGuild _guild;
     public static Task Main(string[] args) 
         => new Program().MainAsync();
 
@@ -29,14 +30,13 @@ public class Program
         // var token = File.ReadAllText("token.txt");
         // var token = JsonConvert.DeserializeObject<AConfigurationClass>(File.ReadAllText("config.json")).Token;
 
-        //_client.Ready += firstSlashCommand;
 
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
-        await Task.Delay(50000);
-        SocketGuild guild = _client.GetGuild(1089360703120490618);
-        Console.WriteLine(_client.Guilds.Count);
-        // Block this task until the program is closed.
+        await Task.Delay(20000);//20秒待機
+        Console.WriteLine("待機完了");
+        _guild = _client.GetGuild(1089360703120490618);
+        await firstSlashCommand();
         await Task.Delay(-1); 
     }
 
@@ -49,14 +49,12 @@ public class Program
     public async Task firstSlashCommand()
     {
 
-        var guild = _client.GetGuild(10893607031204906180);
         SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder();
         slashCommandBuilder.WithDescription("これは初めて作ったslashcommand。\nこれを実行すると、botが挨拶してくれます。");
         slashCommandBuilder.WithName("sayhello");
-        Console.WriteLine(guild.Name);
         try
         {
-            await guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+            await _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
         }
         catch (Exception e)
         {
