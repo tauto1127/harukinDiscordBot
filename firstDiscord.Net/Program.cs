@@ -2,6 +2,8 @@
 
 //Console.WriteLine("Hello, World!");
 
+using Discord;
+
 public class Program
 {
     public static Task Main(string[] args) 
@@ -10,5 +12,11 @@ public class Program
     public async Task MainAsync()
     {
         
+    }
+
+    private Task Log(LogMessage msg)
+    {
+        Console.WriteLine(msg.ToString());
+        return Task.CompletedTask;
     }
 }
