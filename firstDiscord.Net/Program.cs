@@ -23,14 +23,14 @@ public class Program
 
     public async Task MainAsync()
     {
-        _appJson = await AppJson.GetJson("app.json");
+        _appJson = AppJson.GetJson("token");
         Console.WriteLine("ロード完了");
         _client = new DiscordSocketClient();
 
         _client.Log += Log;
         //  You can assign your bot token to a string, and pass that in to connect.
         //  This is, however, insecure, particularly if you plan to have your code hosted in a public repository.
-        var token = _appJson.Token;
+        var token = _appJson.token;
 
         // Some alternative options would be to keep your token in an Environment Variable or a standalone file.
         // var token = Environment.GetEnvironmentVariable("NameOfYourEnvironmentVariable");
@@ -72,24 +72,26 @@ public class Program
 
 class AppJson
 {
-    public string Token { get; set; }
+    public string token { get; set; }
 
-    public static async Task<AppJson> GetJson(string fileName)
+    public static AppJson GetJson(string fileName)
     {
         string jsonString = "";
-        using (StreamReader sr = new StreamReader(new FileStream("app.json", FileMode.OpenOrCreate)))
+        try
         {
-            // Read and display lines from the file until the end of
-            // the file is reached.
-            while (sr.Peek() > 0)
+            // ファイルパスとファイル名を指定してStreamReaderのインスタンスを作成
+            using (var sr = new StreamReader(fileName))
             {
                 jsonString += sr.ReadLine();
+                //Console.WriteLine(sr.ReadToEnd());
             }
         }
-        //string jsonString = r.ReadToEnd();
-        Console.WriteLine("1");
-        AppJson m = JsonConvert.DeserializeObject<AppJson>(jsonString);
-        return m;
+        catch (IOException e)
+        {
+            Console.WriteLine("ファイルが読み取れませんでした:");
+            Console.WriteLine(e.Message);
+        }
+        return new AppJson(){token = jsonString};
     }
 
 }
