@@ -23,6 +23,9 @@ public class Program
 
     public async Task MainAsync()
     {
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("tokenファイルの追加を忘れない\nコマンドからじゃないとファイル読み取れないかも");
+        Console.ForegroundColor = ConsoleColor.White;
         _appJson = AppJson.GetJson("token");
         Console.WriteLine("ロード完了");
         _client = new DiscordSocketClient();
