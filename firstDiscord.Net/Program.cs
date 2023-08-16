@@ -29,7 +29,7 @@ public class Program
         _appJson = AppJson.GetJson("token");
         Console.WriteLine("ロード完了");
         _client = new DiscordSocketClient();
-
+        
         _client.Log += Log;
         //  You can assign your bot token to a string, and pass that in to connect.
         //  This is, however, insecure, particularly if you plan to have your code hosted in a public repository.
@@ -40,7 +40,9 @@ public class Program
         // var token = File.ReadAllText("token.txt");
         // var token = JsonConvert.DeserializeObject<AConfigurationClass>(File.ReadAllText("config.json")).Token;
 
-
+        _client.SlashCommandExecuted += SlashCommandHandler;
+        
+        
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
         await Task.Delay(20000);//20秒待機
@@ -70,6 +72,11 @@ public class Program
         {
             Console.WriteLine(e);
         }
+    }
+
+    private async Task SlashCommandHandler(SocketSlashCommand command)
+    {
+        await command.RespondAsync($"You executed {command.Data.Name}");
     }
 }
 
