@@ -2,7 +2,7 @@ namespace firstDiscord.Net.Model;
 
 public class WayPoint
 {
-    public int Id { get; set; }
+    public int WayPointId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public float X { get; set; }

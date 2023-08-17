@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
 
     public DbSet<WebBookmark> WebBookmarks { get; set; }
     public DbSet<WebCategory> WebCategories { get; set; }
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data source=harukin.db");

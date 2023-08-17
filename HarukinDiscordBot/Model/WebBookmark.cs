@@ -2,7 +2,7 @@ namespace firstDiscord.Net.Model;
 
 public class WebBookmark
 {
-    public int Id { get; set; }
+    public int WebBookmarkId { get; set; }
     public string Name { get; set; }
     public string URL { get; set; }
     public string? Description { get; set; }
