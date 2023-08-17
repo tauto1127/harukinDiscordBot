@@ -25,6 +25,7 @@ public class Program
         Console.ForegroundColor = ConsoleColor.White;
         
         _appJson = AppJson.GetJson("App.json");
+        _token = _appJson.token;
         Console.WriteLine("ロード完了");
         
         _client = new DiscordSocketClient();
@@ -34,11 +35,12 @@ public class Program
         {
             Console.WriteLine("Connected!");
             _guild = _client.GetGuild(1089360703120490618);
-            SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
-            await _slashCommandInitializer.Initialize();
+            if (_appJson.isInit)
+            {
+                SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
+                await _slashCommandInitializer.Initialize();
+            }else{Console.WriteLine("Initialize しません");}
         };
-        
-        _token = _appJson.token;
         
         await _client.LoginAsync(TokenType.Bot, _token);
         await _client.StartAsync();
@@ -85,17 +87,17 @@ public class Program
 class AppJson
 {
     public string token { get; set; }
-
+    public bool isInit { get; set; }
     public static AppJson GetJson(string fileName)
     {
-        string jsonString = ""; 
+        string jsonString = "";
         
         try
         {
             // ファイルパスとファイル名を指定してStreamReaderのインスタンスを作成
             using (var sr = new StreamReader(fileName))
             {
-                for(int i = 0; i < 3; i++) 
+                for(int i = 0; i < 5; i++) 
                 {
                     jsonString += sr.ReadLine(); 
                 }
@@ -112,6 +114,9 @@ class AppJson
         Dictionary<string, string> dictionary = 
             JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString, Program.GetJsonOption());
         
-        return new AppJson(){token = dictionary["token"]};
+        return new AppJson()
+        {
+            token = dictionary["token"], isInit = Boolean.Parse(dictionary["initialize"])
+        };
     }
 }
