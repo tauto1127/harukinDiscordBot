@@ -1,5 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using Discord;
 using Discord.WebSocket;
 using firstDiscord.Net;
@@ -64,6 +67,16 @@ public class Program
         Console.WriteLine(msg.ToString());
         return Task.CompletedTask;
     }
+
+    public static JsonSerializerOptions GetJsonOption()
+    {
+        var options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true,
+        };
+        return options;
+    }
 }
 class AppJson
 {
@@ -71,7 +84,11 @@ class AppJson
 
     public static AppJson GetJson(string fileName)
     {
-        string jsonString = "";
+        string jsonString = @"{
+  ""token"": ""aiueounun""
+}";
+        
+        /*
         try
         {
             // ファイルパスとファイル名を指定してStreamReaderのインスタンスを作成
@@ -85,7 +102,12 @@ class AppJson
         {
             Console.WriteLine("ファイルが読み取れませんでした:");
             Console.WriteLine(e.Message);
-        }
-        return new AppJson(){token = jsonString};
+        }*/
+        
+        //Jsonでこーど
+        Dictionary<string, string> dictionary = 
+            JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString, Program.GetJsonOption());
+        
+        return new AppJson(){token = dictionary["token"]};
     }
 }
