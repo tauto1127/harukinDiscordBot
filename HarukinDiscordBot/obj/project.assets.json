@@ -516,11 +516,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj",
-      "projectName": "firstDiscord.Net",
-      "projectPath": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj",
+      "projectUniqueName": "/Users/takuto/RiderProjects/harukinDiscordBot/HarukinDiscordBot/HarukinDiscordBot.csproj",
+      "projectName": "HarukinDiscordBot",
+      "projectPath": "/Users/takuto/RiderProjects/harukinDiscordBot/HarukinDiscordBot/HarukinDiscordBot.csproj",
       "packagesPath": "/Users/takuto/.nuget/packages/",
-      "outputPath": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/obj/",
+      "outputPath": "/Users/takuto/RiderProjects/harukinDiscordBot/HarukinDiscordBot/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/takuto/.nuget/NuGet/NuGet.Config"

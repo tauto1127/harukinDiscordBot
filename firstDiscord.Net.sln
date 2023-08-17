@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "firstDiscord.Net", "firstDiscord.Net\firstDiscord.Net.csproj", "{6F11B0CF-5F4A-493F-A235-E0E277DB4EAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarukinDiscordBot", "HarukinDiscordBot\HarukinDiscordBot.csproj", "{6F11B0CF-5F4A-493F-A235-E0E277DB4EAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

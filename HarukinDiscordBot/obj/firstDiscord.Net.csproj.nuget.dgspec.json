@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj": {}
+    "/Users/takuto/RiderProjects/harukinDiscordBot/firstDiscord.Net/firstDiscord.Net.csproj": {}
   },
   "projects": {
-    "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj": {
+    "/Users/takuto/RiderProjects/harukinDiscordBot/firstDiscord.Net/firstDiscord.Net.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj",
+        "projectUniqueName": "/Users/takuto/RiderProjects/harukinDiscordBot/firstDiscord.Net/firstDiscord.Net.csproj",
         "projectName": "firstDiscord.Net",
-        "projectPath": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj",
+        "projectPath": "/Users/takuto/RiderProjects/harukinDiscordBot/firstDiscord.Net/firstDiscord.Net.csproj",
         "packagesPath": "/Users/takuto/.nuget/packages/",
-        "outputPath": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/obj/",
+        "outputPath": "/Users/takuto/RiderProjects/harukinDiscordBot/firstDiscord.Net/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/takuto/.nuget/NuGet/NuGet.Config"

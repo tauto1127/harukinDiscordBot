@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JDlegTZJ2tYSZ4Gn/p0hAWZJwuf3cDfyTooxnwOy6KjF/xcBiYNSxS8GvKd7+2aD9Oz44KnkIxvvUlGlcEh3GQ==",
+  "dgSpecHash": "wJBRi4e60ZqP6N/gh3YpeUI0lYW0MtrqLUlxB5fsYYXP7LGTuIxyP3AV6HA8+wuGhp77ZOIYtWGM7g+SuoH4Jg==",
   "success": true,
-  "projectFilePath": "/Users/takuto/RiderProjects/firstDiscord.Net/firstDiscord.Net/firstDiscord.Net.csproj",
+  "projectFilePath": "/Users/takuto/RiderProjects/harukinDiscordBot/HarukinDiscordBot/HarukinDiscordBot.csproj",
   "expectedPackageFiles": [
     "/Users/takuto/.nuget/packages/discord.net/3.12.0/discord.net.3.12.0.nupkg.sha512",
     "/Users/takuto/.nuget/packages/discord.net.commands/3.12.0/discord.net.commands.3.12.0.nupkg.sha512",
