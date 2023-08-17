@@ -17,7 +17,7 @@ public class Program
     private string _token;
     public static Task Main(string[] args) 
         => new Program().MainAsync();
-
+    
     public async Task MainAsync()
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
@@ -30,18 +30,19 @@ public class Program
         _client = new DiscordSocketClient();
         _client.Log += Log;
         _client.SlashCommandExecuted += SlashCommandHandler;
+        _client.Connected += async () =>
+        {
+            Console.WriteLine("Connected!");
+            _guild = _client.GetGuild(1089360703120490618);
+            SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
+            await _slashCommandInitializer.Initialize();
+        };
         
         _token = _appJson.token;
         
         await _client.LoginAsync(TokenType.Bot, _token);
         await _client.StartAsync();
         
-        await Task.Delay(10000);//20秒待機
-        Console.WriteLine("待機完了");
-        _guild = _client.GetGuild(1089360703120490618);
-        //スラッシュコマンドINITIALIZE
-        SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
-        await _slashCommandInitializer.Initialize();
         await Task.Delay(-1); 
     }
     private async Task SlashCommandHandler(SocketSlashCommand command)
@@ -59,6 +60,9 @@ public class Program
                 break;
             case "feedback" :
                 await Commands.HandleFeedbackCommand(command);
+                break;
+            case "waypoint":
+                await WayPointCommands.WayPointCommandHandler(command);
                 break;
         }
     }    
