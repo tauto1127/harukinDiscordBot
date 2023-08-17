@@ -17,6 +17,7 @@ public class SlashCommandInitializer
         await FirstSlashCommand();
         await ListRollCommand();
         await SettingCommands();
+        await FeedbackCommand();
         
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
@@ -108,7 +109,33 @@ public class SlashCommandInitializer
         {
             Console.WriteLine($"oh no!{e}");
         }
+    }
 
+    private async Task FeedbackCommand()
+    {
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+            .WithName("feedback")
+            .WithDescription("Tell us how much you are enjoying this bot!")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("rating")
+                .WithDescription("The rating your willing to give our bot")
+                .WithRequired(true)
+                .AddChoice("Terrible", 1)
+                .AddChoice("Meh", 2)
+                .AddChoice("Good", 3)
+                .AddChoice("Good", 3)
+                .AddChoice("Lovely", 4)
+                .AddChoice("Excellent!", 5)
+                .WithType(ApplicationCommandOptionType.Integer)
+            );
+        try
+        {
+            await _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
 }

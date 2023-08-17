@@ -51,6 +51,12 @@ public class Program
             case "list-roles" :
                 await Commands.HandleListRoleCommand(command);
                 break;
+            case "settings" :
+                await SettingCommands.HandleSettingsCommand(command);
+                break;
+            case "feedback" :
+                await Commands.HandleFeedbackCommand(command);
+                break;
         }
     }    
     private Task Log(LogMessage msg)

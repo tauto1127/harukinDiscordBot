@@ -28,4 +28,15 @@ public class Commands
         // Now, Let's respond with the embed.
         await command.RespondAsync(embed: embedBuiler.Build(), ephemeral: true);
     }
+
+    public static async Task HandleFeedbackCommand(SocketSlashCommand command)
+    {
+        EmbedBuilder embedBuilder = new EmbedBuilder()
+            .WithAuthor(command.User)
+            .WithTitle("Feedback")
+            .WithDescription($"Thanks for your feedback! You rated us {command.Data.Options.First().Value}/5")
+            .WithColor(Color.Green)
+            .WithCurrentTimestamp();
+        await command.RespondAsync(embed: embedBuilder.Build());
+    }
 }
