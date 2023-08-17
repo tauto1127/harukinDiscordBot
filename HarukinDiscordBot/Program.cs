@@ -36,7 +36,7 @@ public class Program
         await _client.LoginAsync(TokenType.Bot, _token);
         await _client.StartAsync();
         
-        await Task.Delay(20000);//20秒待機
+        await Task.Delay(10000);//20秒待機
         Console.WriteLine("待機完了");
         _guild = _client.GetGuild(1089360703120490618);
         //スラッシュコマンドINITIALIZE

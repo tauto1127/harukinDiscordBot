@@ -15,11 +15,13 @@ public class SlashCommandInitializer
 
     public async Task Initialize()
     {
+        Console.WriteLine("スラッシュコマンドのInitialize開始");
         await FirstSlashCommand();
         await ListRollCommand();
         await SettingCommands();
         await FeedbackCommand();
         await TeleportPipeCommands();
+        await WayPointCommands();
 
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
@@ -147,50 +149,44 @@ public class SlashCommandInitializer
     private async Task TeleportPipeCommands()
     {
         SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
-            .WithName("a")
-            .WithDescription("aaa")
+            .WithName("teleportpipe")
+            .WithDescription("テレポートパイプチャンネル管理用")
             .AddOption(new SlashCommandOptionBuilder()
-                .WithName("teleportpipe")
-                .WithDescription("テレポートパイプチャンネル管理用")
-                .WithType(ApplicationCommandOptionType.SubCommandGroup)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("addchannel")
-                    .WithDescription("テレポートパイプチャンネルの追加")
-                    .WithType(ApplicationCommandOptionType.SubCommand)
-                    .AddOption("name", ApplicationCommandOptionType.String, "チャンネルの名前")
-                )
-            ).AddOption(new SlashCommandOptionBuilder()
-                .WithName("waypoint")
-                .WithDescription("ウェイポイント管理用")
-                .WithType(ApplicationCommandOptionType.SubCommandGroup)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("addwaypoint")
-                    .WithDescription("ウェイポイントを追加")
-                    .WithType(ApplicationCommandOptionType.SubCommand)
-                    /*
-                    .AddOptions(
-                        new SlashCommandOptionBuilder()
-                            .AddOption("name", ApplicationCommandOptionType.String, "ウェイポイントの名前")
-                            .WithRequired(true),
-                        new SlashCommandOptionBuilder()
-                            .AddOption("x", ApplicationCommandOptionType.Number, "ウェイポイントのx座標")
-                            .WithRequired(true),
-                        new SlashCommandOptionBuilder()
-                            .AddOption("y", ApplicationCommandOptionType.Number, "ウェイポイントのy座標")
-                            .WithRequired(true),
-                        new SlashCommandOptionBuilder()
-                            .AddOption("z", ApplicationCommandOptionType.Number, "ウェイポイントのz座標")
-                            .WithRequired(true),
-                        new SlashCommandOptionBuilder()
-                            .AddOption("description", ApplicationCommandOptionType.String, "ウェイポイントの説明(not required)")
-                            .WithRequired(false)
-                    )*/
-                )
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("showwaypoint")
-                    .WithDescription("ウェイポイント一覧を表示")
-                    .WithType(ApplicationCommandOptionType.SubCommand)
-                )
+                .WithName("addchannel")
+                .WithDescription("テレポートパイプチャンネルの追加")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("name", ApplicationCommandOptionType.String, "チャンネルの名前")
+            );
+            
+        try
+        {
+            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async Task WayPointCommands()
+    {
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+            .WithName("waypoint")
+            .WithDescription("ウェイポイント管理用")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("addwaypoint")
+                .WithDescription("ウェイポイントを追加")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("waypointname", ApplicationCommandOptionType.String, "ウェイポイントの名前")
+                .AddOption("x", ApplicationCommandOptionType.Number, "ウェイポイントのx座標")
+                .AddOption("y", ApplicationCommandOptionType.Number, "ウェイポイントのy座標")
+                .AddOption("z", ApplicationCommandOptionType.Number, "ウェイポイントのz座標")
+                .AddOption("description", ApplicationCommandOptionType.String, "ウェイポイントの説明(not required)")
+            )
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("showwaypoint")
+                .WithDescription("ウェイポイント一覧を表示")
+                .WithType(ApplicationCommandOptionType.SubCommand)
             );
         try
         {
