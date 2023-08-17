@@ -1,23 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-//Console.WriteLine("Hello, World!");
-
-using System.Net.Sockets;
-using System.Reflection;
-using System.Text.Json.Serialization;
 using Discord;
-using Discord.Net;
 using Discord.WebSocket;
-using Newtonsoft.Json;
-
+using firstDiscord.Net;
 
 public class Program
 {
+    private const bool isInitializeSlashCommand = true;
+    
     private DiscordSocketClient _client;
     private SocketGuild _guild;
     private AppJson _appJson;
-    
-    [JsonPropertyName("token")] public string token { get; }
+    private string _token;
     public static Task Main(string[] args) 
         => new Program().MainAsync();
 
@@ -26,60 +20,45 @@ public class Program
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("tokenファイルの追加を忘れない\nコマンドからじゃないとファイル読み取れないかも");
         Console.ForegroundColor = ConsoleColor.White;
+        
         _appJson = AppJson.GetJson("token");
         Console.WriteLine("ロード完了");
-        _client = new DiscordSocketClient();
         
+        _client = new DiscordSocketClient();
         _client.Log += Log;
-        //  You can assign your bot token to a string, and pass that in to connect.
-        //  This is, however, insecure, particularly if you plan to have your code hosted in a public repository.
-        var token = _appJson.token;
-
-        // Some alternative options would be to keep your token in an Environment Variable or a standalone file.
-        // var token = Environment.GetEnvironmentVariable("NameOfYourEnvironmentVariable");
-        // var token = File.ReadAllText("token.txt");
-        // var token = JsonConvert.DeserializeObject<AConfigurationClass>(File.ReadAllText("config.json")).Token;
-
         _client.SlashCommandExecuted += SlashCommandHandler;
         
+        _token = _appJson.token;
         
-        await _client.LoginAsync(TokenType.Bot, token);
+        await _client.LoginAsync(TokenType.Bot, _token);
         await _client.StartAsync();
+        
         await Task.Delay(20000);//20秒待機
         Console.WriteLine("待機完了");
         _guild = _client.GetGuild(1089360703120490618);
-        await firstSlashCommand();
+        //スラッシュコマンドINITIALIZE
+        SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
+        await _slashCommandInitializer.Initialize();
         await Task.Delay(-1); 
     }
-
+    private async Task SlashCommandHandler(SocketSlashCommand command)
+    {
+        switch (command.Data.Name)
+        {
+            case "sayhello":
+                await command.RespondAsync($"{command.User.Username}さんこんにちは");
+                break;
+            case "list-roles" :
+                await Commands.HandleListRoleCommand(command);
+                break;
+        }
+    }    
     private Task Log(LogMessage msg)
     {
         Console.WriteLine(msg.ToString());
         return Task.CompletedTask;
     }
-
-    public async Task firstSlashCommand()
-    {
-
-        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder();
-        slashCommandBuilder.WithDescription("これは初めて作ったslashcommand。\nこれを実行すると、botが挨拶してくれます。");
-        slashCommandBuilder.WithName("sayhello");
-        try
-        {
-            await _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-    }
-
-    private async Task SlashCommandHandler(SocketSlashCommand command)
-    {
-        await command.RespondAsync($"You executed {command.Data.Name}");
-    }
 }
-
 class AppJson
 {
     public string token { get; set; }
@@ -103,5 +82,4 @@ class AppJson
         }
         return new AppJson(){token = jsonString};
     }
-
 }
