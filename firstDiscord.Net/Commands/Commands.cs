@@ -5,6 +5,11 @@ namespace firstDiscord.Net;
 
 public class Commands
 {
+    /// <summary>
+    /// "ephemeral responce"なのでそのユーザーにしか見えないかつ
+    /// 時間がたったらメッセージは消える
+    /// </summary>
+    /// <param name="command"></param>
     public static async Task HandleListRoleCommand(SocketSlashCommand command)
     {
         // We need to extract the user parameter from the command. since we only have one option and it's required, we can just use the first option.
@@ -21,6 +26,6 @@ public class Commands
             .WithCurrentTimestamp();
 
         // Now, Let's respond with the embed.
-        await command.RespondAsync(embed: embedBuiler.Build());
+        await command.RespondAsync(embed: embedBuiler.Build(), ephemeral: true);
     }
 }
