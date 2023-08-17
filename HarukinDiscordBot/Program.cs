@@ -91,18 +91,11 @@ class AppJson
     public static AppJson GetJson(string fileName)
     {
         string jsonString = "";
-        
         try
         {
-            // ファイルパスとファイル名を指定してStreamReaderのインスタンスを作成
             using (var sr = new StreamReader(fileName))
             {
-                for(int i = 0; i < 5; i++) 
-                {
-                    jsonString += sr.ReadLine(); 
-                }
-                
-                //Console.WriteLine(sr.ReadToEnd());
+                jsonString = sr.ReadToEnd();
             }
         }
         catch (IOException e)
@@ -110,7 +103,6 @@ class AppJson
             Console.WriteLine("ファイルが読み取れませんでした:");
             Console.WriteLine(e.Message);
         }
-        
         Dictionary<string, string> dictionary = 
             JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString, Program.GetJsonOption());
         
