@@ -7,6 +7,7 @@ namespace firstDiscord.Net;
 public class SlashCommandInitializer
 {
     private SocketGuild _guild;
+
     public SlashCommandInitializer(SocketGuild guild)
     {
         this._guild = guild;
@@ -18,9 +19,11 @@ public class SlashCommandInitializer
         await ListRollCommand();
         await SettingCommands();
         await FeedbackCommand();
-        
+        await TeleportPipeCommands();
+
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
+
     private async Task FirstSlashCommand()
     {
         SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
@@ -55,52 +58,55 @@ public class SlashCommandInitializer
 
     private async Task SettingCommands()
     {
-         var slashCommandBuilder = new SlashCommandBuilder()
-        .WithName("settings")
-        .WithDescription("Changes some settings within the bot.")
-        .AddOption(new SlashCommandOptionBuilder()
-            .WithName("field-a")
-            .WithDescription("Gets or sets the field A")
-            .WithType(ApplicationCommandOptionType.SubCommandGroup)
+        var slashCommandBuilder = new SlashCommandBuilder()
+            .WithName("settings")
+            .WithDescription("Changes some settings within the bot.")
             .AddOption(new SlashCommandOptionBuilder()
-                .WithName("set")
-                .WithDescription("Sets the field A")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("value", ApplicationCommandOptionType.String, "the value to set the field", isRequired: true)
+                .WithName("field-a")
+                .WithDescription("Gets or sets the field A")
+                .WithType(ApplicationCommandOptionType.SubCommandGroup)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("set")
+                    .WithDescription("Sets the field A")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("value", ApplicationCommandOptionType.String, "the value to set the field",
+                        isRequired: true)
+                ).AddOption(new SlashCommandOptionBuilder()
+                    .WithName("get")
+                    .WithDescription("Gets the value of field A.")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
             ).AddOption(new SlashCommandOptionBuilder()
-                .WithName("get")
-                .WithDescription("Gets the value of field A.")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-            )
-        ).AddOption(new SlashCommandOptionBuilder()
-            .WithName("field-b")
-            .WithDescription("Gets or sets the field B")
-            .WithType(ApplicationCommandOptionType.SubCommandGroup)
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("set")
-                .WithDescription("Sets the field B")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("value", ApplicationCommandOptionType.Integer, "the value to set the fie to.", isRequired: true)
+                .WithName("field-b")
+                .WithDescription("Gets or sets the field B")
+                .WithType(ApplicationCommandOptionType.SubCommandGroup)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("set")
+                    .WithDescription("Sets the field B")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("value", ApplicationCommandOptionType.Integer, "the value to set the fie to.",
+                        isRequired: true)
+                ).AddOption(new SlashCommandOptionBuilder()
+                    .WithName("get")
+                    .WithDescription("Gets the value of field B.")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
             ).AddOption(new SlashCommandOptionBuilder()
-                .WithName("get")
-                .WithDescription("Gets the value of field B.")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-            )
-        ).AddOption(new SlashCommandOptionBuilder()
-            .WithName("field-c")
-            .WithDescription("Gets or sets the field C")
-            .WithType(ApplicationCommandOptionType.SubCommandGroup)
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("set")
-                .WithDescription("Sets the field C")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("value", ApplicationCommandOptionType.Boolean, "the value to set the fie to.", isRequired: true)
-            ).AddOption(new SlashCommandOptionBuilder()
-                .WithName("get")
-                .WithDescription("Gets the value of field C.")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-            )
-        );
+                .WithName("field-c")
+                .WithDescription("Gets or sets the field C")
+                .WithType(ApplicationCommandOptionType.SubCommandGroup)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("set")
+                    .WithDescription("Sets the field C")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("value", ApplicationCommandOptionType.Boolean, "the value to set the fie to.",
+                        isRequired: true)
+                ).AddOption(new SlashCommandOptionBuilder()
+                    .WithName("get")
+                    .WithDescription("Gets the value of field C.")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
+            );
         try
         {
             await _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
@@ -138,4 +144,62 @@ public class SlashCommandInitializer
         }
     }
 
+    private async Task TeleportPipeCommands()
+    {
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+            .WithName("a")
+            .WithDescription("aaa")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("teleportpipe")
+                .WithDescription("テレポートパイプチャンネル管理用")
+                .WithType(ApplicationCommandOptionType.SubCommandGroup)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("addchannel")
+                    .WithDescription("テレポートパイプチャンネルの追加")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("name", ApplicationCommandOptionType.String, "チャンネルの名前")
+                )
+            ).AddOption(new SlashCommandOptionBuilder()
+                .WithName("waypoint")
+                .WithDescription("ウェイポイント管理用")
+                .WithType(ApplicationCommandOptionType.SubCommandGroup)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("addwaypoint")
+                    .WithDescription("ウェイポイントを追加")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    /*
+                    .AddOptions(
+                        new SlashCommandOptionBuilder()
+                            .AddOption("name", ApplicationCommandOptionType.String, "ウェイポイントの名前")
+                            .WithRequired(true),
+                        new SlashCommandOptionBuilder()
+                            .AddOption("x", ApplicationCommandOptionType.Number, "ウェイポイントのx座標")
+                            .WithRequired(true),
+                        new SlashCommandOptionBuilder()
+                            .AddOption("y", ApplicationCommandOptionType.Number, "ウェイポイントのy座標")
+                            .WithRequired(true),
+                        new SlashCommandOptionBuilder()
+                            .AddOption("z", ApplicationCommandOptionType.Number, "ウェイポイントのz座標")
+                            .WithRequired(true),
+                        new SlashCommandOptionBuilder()
+                            .AddOption("description", ApplicationCommandOptionType.String, "ウェイポイントの説明(not required)")
+                            .WithRequired(false)
+                    )*/
+                )
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("showwaypoint")
+                    .WithDescription("ウェイポイント一覧を表示")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
+            );
+        try
+        {
+            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
 }
+    
