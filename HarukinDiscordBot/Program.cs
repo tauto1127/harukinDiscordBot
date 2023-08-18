@@ -6,6 +6,8 @@ using System.Text.Unicode;
 using Discord;
 using Discord.WebSocket;
 using firstDiscord.Net;
+using firstDiscord.Net.Data;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 public class Program
 {
@@ -17,7 +19,8 @@ public class Program
     private string _token;
     public static Task Main(string[] args) 
         => new Program().MainAsync();
-    
+
+    private readonly AppDbContext _context = new AppDbContext();
     public async Task MainAsync()
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
@@ -31,6 +34,7 @@ public class Program
         _client = new DiscordSocketClient();
         _client.Log += Log;
         _client.SlashCommandExecuted += SlashCommandHandler;
+        
         _client.Connected += async () =>
         {
             Console.WriteLine("Connected!");
@@ -39,7 +43,7 @@ public class Program
             {
                 SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
                 await _slashCommandInitializer.Initialize();
-            }else{Console.WriteLine("Initialize しません");}
+            }else{WriteLineColor("Initializeしません", ConsoleColor.Yellow);}
         };
         
         await _client.LoginAsync(TokenType.Bot, _token);
@@ -64,7 +68,7 @@ public class Program
                 await Commands.HandleFeedbackCommand(command);
                 break;
             case "waypoint":
-                await WayPointCommands.WayPointCommandHandler(command);
+                await WayPointCommands.WayPointCommandHandler(command, _context);
                 break;
         }
     }    
@@ -82,6 +86,14 @@ public class Program
             WriteIndented = true,
         };
         return options;
+    }
+
+    public static void WriteLineColor(string label, ConsoleColor color)
+    {
+        ConsoleColor origin = Console.BackgroundColor;
+        Console.ForegroundColor = color;
+        Console.WriteLine(label);
+        Console.ForegroundColor = origin;
     }
 }
 class AppJson
