@@ -18,6 +18,9 @@ public class WebBookmarkCommands
             case "showwebbookmarks":
                 ShowWebbookMark(command, _context);
                 break;
+            case "deletewebbookmark":
+                DeleteWebbookMark(command, _context);
+                break;
         }
     }
 
@@ -55,5 +58,33 @@ public class WebBookmarkCommands
         }
 
         command.RespondAsync(output);
+    }
+
+    private async static Task DeleteWebbookMark(SocketSlashCommand command, AppDbContext _context)
+    {
+        Console.WriteLine("aieuo");
+        var dictionary = CommandDataAnalyzer.GetArgDictionary(command);
+        WebBookmark webBookmark;
+        if ((webBookmark = await _context.WebBookmarks.FindAsync(Int32.Parse(dictionary["id"]))) == null)
+        {
+            command.RespondAsync("そのブックマークは見つかりませんでした");
+        }
+        else
+        {
+            try
+            {
+                _context.WebBookmarks.Remove(webBookmark);
+                await _context.SaveChangesAsync();
+                command.RespondAsync($"deleted {webBookmark.Name}");
+            }
+            catch (DbUpdateException e)
+            {
+                command.RespondAsync("データベースの接続失敗");
+            }
+            catch (Exception e)
+            {
+                command.RespondAsync(e.ToString().Substring(0, 2000));
+            }
+        }
     }
 }

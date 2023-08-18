@@ -224,6 +224,12 @@ public class SlashCommandInitializer
                 .WithDescription("ウェブブックマーク一覧を表示")
                 .WithType(ApplicationCommandOptionType.SubCommand)
             )
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("deletewebbookmark")
+                .WithDescription("ウェブブックマークを削除")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("id", ApplicationCommandOptionType.Integer, "ID", isRequired: true)
+            )
             ;
         try
         {
