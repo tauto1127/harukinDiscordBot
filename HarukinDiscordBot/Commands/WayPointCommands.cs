@@ -38,11 +38,6 @@ public class WayPointCommands
             dictionary.Add(VARIABLE.Name, VARIABLE.Value);
         }
 
-        foreach (var VARIABLE in dictionary)
-        {
-            Console.WriteLine($"{VARIABLE.Key}は：{VARIABLE.Value}");
-        }
-
         WayPoint wayPoint;
         if (!dictionary.ContainsKey("description"))
         {
