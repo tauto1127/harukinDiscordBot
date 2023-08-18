@@ -15,6 +15,9 @@ public class WebBookmarkCommands
             case "addwebbookmark":
                 AddWebbookMark(command, _context);
                 break;
+            case "showwebbookmarks":
+                ShowWebbookMark(command, _context);
+                break;
         }
     }
 
@@ -43,4 +46,14 @@ public class WebBookmarkCommands
         }
     }
 
+    private async static Task ShowWebbookMark(SocketSlashCommand command, AppDbContext _context)
+    {
+        string output = "";
+        foreach (var VARIABLE in _context.WebBookmarks)
+        {
+            output += $"{VARIABLE.WebBookmarkId}：[{VARIABLE.Name}]({VARIABLE.URL})\n";
+        }
+
+        command.RespondAsync(output);
+    }
 }

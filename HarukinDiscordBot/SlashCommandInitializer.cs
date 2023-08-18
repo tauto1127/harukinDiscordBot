@@ -218,7 +218,13 @@ public class SlashCommandInitializer
                 .AddOption("webbookmarkname", ApplicationCommandOptionType.String, "ブックマークの名前", isRequired: true)
                 .AddOption("url", ApplicationCommandOptionType.String, "URL", isRequired: true)
                 .AddOption("description", ApplicationCommandOptionType.String, "ブックマークの説明")
-            );
+            )
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("showwebbookmarks")
+                .WithDescription("ウェブブックマーク一覧を表示")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+            )
+            ;
         try
         {
             _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
