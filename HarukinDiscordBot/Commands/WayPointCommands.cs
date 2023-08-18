@@ -1,9 +1,7 @@
-using Discord;
 using Discord.WebSocket;
 using firstDiscord.Net.Data;
 using firstDiscord.Net.Model;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 
 namespace firstDiscord.Net;
 
@@ -30,31 +28,26 @@ public class WayPointCommands
     {
         var fieldName = command.Data.Options.First().Name;
         var getOrSet = command.Data.Options.First().Options.First().Name;
-        var value = command.Data.Options.First().Options.ToList();
 
-        Dictionary<string, object> dictionary = new Dictionary<string, object>();
-        foreach (var VARIABLE in value)
-        {
-            dictionary.Add(VARIABLE.Name, VARIABLE.Value);
-        }
+        var dictionary = CommandDataAnalyzer.GetArgDictionary(command);
 
         WayPoint wayPoint;
         if (!dictionary.ContainsKey("description"))
         {
             wayPoint = new WayPoint(
-                dictionary["waypointname"].ToString(),
-                dictionary["x"].ToString(),
-                dictionary["y"].ToString(),
-                dictionary["z"].ToString());
+                dictionary["waypointname"],
+                dictionary["x"],
+                dictionary["y"],
+                dictionary["z"]);
         }
         else
         {
             wayPoint = new WayPoint(
-                dictionary["waypointname"].ToString(),
-                dictionary["x"].ToString(),
-                dictionary["y"].ToString(),
-                dictionary["z"].ToString(),
-                dictionary["description"].ToString());
+                dictionary["waypointname"],
+                dictionary["x"],
+                dictionary["y"],
+                dictionary["z"],
+                dictionary["description"]);
         }
 
 
