@@ -16,6 +16,9 @@ public class WayPointCommands
             case "addwaypoint":
                 await AddWayPoint(command, _context);
                 break;
+            case "showwaypoint":
+                await ShowWayPoints(command, _context);
+                break;
         }
     }
 
@@ -37,7 +40,7 @@ public class WayPointCommands
         }
 
         WayPoint wayPoint;
-        if (dictionary["description"] == null)
+        if (!dictionary.ContainsKey("description"))
         {
             wayPoint = new WayPoint(
                 dictionary["waypointname"].ToString(),
@@ -62,13 +65,22 @@ public class WayPointCommands
             _context.WayPoints.Add(wayPoint);
             await _context.SaveChangesAsync();
             command.RespondAsync($"Added {wayPoint}");
-            Console.WriteLine("try実行されてる？？ ");
         }
         catch (Exception e)
         {
-            //command.RespondAsync("error occured");
             command.RespondAsync(e.ToString().Substring(0,2000));
-            Console.Write("oh no!");
+            Console.WriteLine(e);
         }
+    }
+
+    private async static Task ShowWayPoints(SocketSlashCommand command, AppDbContext _context)
+    {
+        string output = "";
+        foreach (var VARIABLE in _context.WayPoints)
+        {
+            output += $"{VARIABLE.Name}：({VARIABLE.X}, {VARIABLE.Y}, {VARIABLE.Z}) \n--{VARIABLE.Description}";
+        }
+
+        command.RespondAsync(output);
     }
 }
