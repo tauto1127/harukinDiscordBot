@@ -1,7 +1,5 @@
-using System.Reflection.Metadata;
 using Discord;
 using Discord.WebSocket;
-using firstDiscord.Net.Data;
 using firstDiscord.Net.Model;
 
 namespace firstDiscord.Net;
@@ -264,7 +262,13 @@ public class SlashCommandInitializer
                         new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = PipeType.金オイル},
                         new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = PipeType.重油}
                     })
-            );
+            )
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("show")
+                .WithDescription("チャンネル表示")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+            )
+            ;
         try
         {
             _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
@@ -275,4 +279,3 @@ public class SlashCommandInitializer
         }
     }
 }
-    

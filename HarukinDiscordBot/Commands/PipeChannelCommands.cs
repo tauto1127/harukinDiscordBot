@@ -15,6 +15,9 @@ public class PipeChannelCommands
             case "add":
                 await AddPipeChannel(command, _context);
                 break;
+            case "show":
+                await ShowPipeChannels(command, _context);
+                break;
         }
     }
 
@@ -43,5 +46,16 @@ public class PipeChannelCommands
         {
             command.RespondAsync(e.ToString().Substring(0, 2000));
         }
+    }
+
+    private async static Task ShowPipeChannels(SocketSlashCommand command, AppDbContext _context)
+    {
+        string output = "";
+        foreach (var VARIABLE in _context.TeleportChannels)
+        {
+            output += $"{VARIABLE.Id}：{VARIABLE.Name}({VARIABLE.Channel}[{VARIABLE.Type}]) \n>{VARIABLE.Description}\n";
+        }
+
+        command.RespondAsync(output);
     }
 }
