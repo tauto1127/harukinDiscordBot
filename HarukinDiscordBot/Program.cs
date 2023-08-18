@@ -7,6 +7,7 @@ using Discord;
 using Discord.WebSocket;
 using firstDiscord.Net;
 using firstDiscord.Net.Data;
+using firstDiscord.Net.Model;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 public class Program
@@ -30,7 +31,6 @@ public class Program
         _appJson = AppJson.GetJson("App.json");
         _token = _appJson.token;
         Console.WriteLine("ロード完了");
-        
         _client = new DiscordSocketClient();
         _client.Log += Log;
         _client.SlashCommandExecuted += SlashCommandHandler;
@@ -72,6 +72,9 @@ public class Program
                 break;
             case "webbookmark":
                 await WebBookmarkCommands.WebBookmarkCommandHandler(command, _context);
+                break;
+            case "pipe":
+                await PipeChannelCommands.PipeChannelCommandHandler(command, _context);
                 break;
         }
     }    

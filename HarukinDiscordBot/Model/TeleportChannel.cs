@@ -9,4 +9,29 @@ public class TeleportChannel
     public string Type { get; set; }
     public DateTime Created { get; set; }
     public DateTime Modified { get; set; }
+
+    public TeleportChannel(string name, string description, int channel, string type)
+    {
+        this.Name = name;
+        this.Description = description;
+        this.Channel = channel;
+        this.Type = type;
+        this.Created = DateTime.Now;
+        this.Modified = DateTime.Now;
+    }
+
+    public TeleportChannel()
+    {
+        
+    }
+}
+
+enum PipeType
+{
+    なし,
+    溶岩,
+    水,
+    金オイル,
+    オイル,
+    重油,
 }

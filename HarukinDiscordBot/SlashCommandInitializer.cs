@@ -2,6 +2,7 @@ using System.Reflection.Metadata;
 using Discord;
 using Discord.WebSocket;
 using firstDiscord.Net.Data;
+using firstDiscord.Net.Model;
 
 namespace firstDiscord.Net;
 
@@ -257,11 +258,11 @@ public class SlashCommandInitializer
                 .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類", 
                     choices:new[]
                     {
-                        new ApplicationCommandOptionChoiceProperties(){Name = "lava", Value = "溶岩"},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "water", Value = "水"},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "goldoil", Value = "金オイル"},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = "オイル"},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = "重油"}
+                        new ApplicationCommandOptionChoiceProperties(){Name = "lava", Value = PipeType.溶岩},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "water", Value = PipeType.水},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "goldoil", Value = PipeType.オイル},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = PipeType.金オイル},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = PipeType.重油}
                     })
             );
         try
