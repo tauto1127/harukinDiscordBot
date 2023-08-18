@@ -24,6 +24,7 @@ public class SlashCommandInitializer
         await TeleportPipeCommands();
         await WayPointCommands();
         await WebBookmarkCommands();
+        await PipeChannelCommands();
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
 
@@ -231,6 +232,38 @@ public class SlashCommandInitializer
                 .AddOption("id", ApplicationCommandOptionType.Integer, "ID", isRequired: true)
             )
             ;
+        try
+        {
+            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async Task PipeChannelCommands()
+    {
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+            .WithName("pipe")
+            .WithDescription("パイプチャンネル管理用")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("add")
+                .WithDescription("チャンネル追加")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
+                .AddOption("num", ApplicationCommandOptionType.Number, "番号", isRequired: true)
+                .AddOption("description", ApplicationCommandOptionType.String, "説明")
+                .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類", 
+                    choices:new[]
+                    {
+                        new ApplicationCommandOptionChoiceProperties(){Name = "lava", Value = "溶岩"},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "water", Value = "水"},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "goldoil", Value = "金オイル"},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = "オイル"},
+                        new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = "重油"}
+                    })
+            );
         try
         {
             _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
