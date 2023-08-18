@@ -78,7 +78,7 @@ public class WayPointCommands
         string output = "";
         foreach (var VARIABLE in _context.WayPoints)
         {
-            output += $"{VARIABLE.Name}：({VARIABLE.X}, {VARIABLE.Y}, {VARIABLE.Z}) \n--{VARIABLE.Description}";
+            output += $"{VARIABLE.Name}：({VARIABLE.X}, {VARIABLE.Y}, {VARIABLE.Z}) \n> {VARIABLE.Description}\n";
         }
 
         command.RespondAsync(output);
