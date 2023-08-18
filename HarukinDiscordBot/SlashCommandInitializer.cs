@@ -1,6 +1,7 @@
 using System.Reflection.Metadata;
 using Discord;
 using Discord.WebSocket;
+using firstDiscord.Net.Data;
 
 namespace firstDiscord.Net;
 
@@ -187,7 +188,14 @@ public class SlashCommandInitializer
                 .WithName("showwaypoint")
                 .WithDescription("ウェイポイント一覧を表示")
                 .WithType(ApplicationCommandOptionType.SubCommand)
-            );
+            )
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("deletewaypoint")
+                .WithDescription("ウェイポイントを削除")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("id", ApplicationCommandOptionType.Integer, "ウェイポイントID", isRequired:true)
+            )
+            ;
         try
         {
             _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
