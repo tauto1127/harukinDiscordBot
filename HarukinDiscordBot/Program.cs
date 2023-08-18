@@ -70,6 +70,9 @@ public class Program
             case "waypoint":
                 await WayPointCommands.WayPointCommandHandler(command, _context);
                 break;
+            case "webbookmark":
+                await WebBookmarkCommands.WebBookmarkCommandHandler(command, _context);
+                break;
         }
     }    
     private Task Log(LogMessage msg)

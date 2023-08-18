@@ -23,7 +23,7 @@ public class SlashCommandInitializer
         await FeedbackCommand();
         await TeleportPipeCommands();
         await WayPointCommands();
-
+        await WebBookmarkCommands();
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
 
@@ -196,6 +196,29 @@ public class SlashCommandInitializer
                 .AddOption("id", ApplicationCommandOptionType.Integer, "ウェイポイントID", isRequired:true)
             )
             ;
+        try
+        {
+            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async Task WebBookmarkCommands()
+    {
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+            .WithName("webbookmark")
+            .WithDescription("ウェブブックマーク管理用")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("addwebbookmark")
+                .WithDescription("ウェブブックマークを追加")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("webbookmarkname", ApplicationCommandOptionType.String, "ブックマークの名前", isRequired: true)
+                .AddOption("url", ApplicationCommandOptionType.String, "URL", isRequired: true)
+                .AddOption("description", ApplicationCommandOptionType.String, "ブックマークの説明")
+            );
         try
         {
             _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
