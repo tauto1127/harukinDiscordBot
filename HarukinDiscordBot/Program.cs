@@ -38,7 +38,7 @@ public class Program
         _client.Connected += async () =>
         {
             Console.WriteLine("Connected!");
-            _guild = _client.GetGuild(1089360703120490618);
+            _guild = _client.GetGuild(_appJson.guildId);
             if (_appJson.isInit)
             {
                 SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
@@ -105,6 +105,7 @@ public class Program
 class AppJson
 {
     public string token { get; set; }
+    public ulong guildId { get; set; }
     public bool isInit { get; set; }
     public static AppJson GetJson(string fileName)
     {
@@ -126,7 +127,9 @@ class AppJson
         
         return new AppJson()
         {
-            token = dictionary["token"], isInit = Boolean.Parse(dictionary["initialize"])
+            token = dictionary["token"],
+            isInit = Boolean.Parse(dictionary["initialize"]),
+            guildId = ulong.Parse(dictionary["guildid"]),
         };
     }
 }

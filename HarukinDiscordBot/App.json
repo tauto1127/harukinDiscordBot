@@ -1,4 +1,5 @@
 {
-  "token": "Token Here",
-  "initialize": "false"
+  "token": "token here",
+  "guildid": "guildid here",
+  "initialize": "true"
 }
