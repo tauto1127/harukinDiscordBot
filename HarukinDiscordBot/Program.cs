@@ -34,11 +34,16 @@ public class Program
         _client = new DiscordSocketClient();
         _client.Log += Log;
         _client.SlashCommandExecuted += SlashCommandHandler;
-        
         _client.Connected += async () =>
         {
             Console.WriteLine("Connected!");
             _guild = _client.GetGuild(_appJson.guildId);
+            if (_appJson.isReset)
+            {
+                WriteLineColor("スラッシュコマンドをリセットします", ConsoleColor.Yellow);
+                await _guild.DeleteApplicationCommandsAsync();
+            }
+            
             if (_appJson.isInit)
             {
                 SlashCommandInitializer _slashCommandInitializer = new SlashCommandInitializer(_guild);
@@ -107,6 +112,7 @@ class AppJson
     public string token { get; set; }
     public ulong guildId { get; set; }
     public bool isInit { get; set; }
+    public bool isReset { get; set; }
     public static AppJson GetJson(string fileName)
     {
         string jsonString = "";
@@ -130,6 +136,7 @@ class AppJson
             token = dictionary["token"],
             isInit = Boolean.Parse(dictionary["initialize"]),
             guildId = ulong.Parse(dictionary["guildid"]),
+            isReset = Boolean.Parse(dictionary["commandreset"])
         };
     }
 }
