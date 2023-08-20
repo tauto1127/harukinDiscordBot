@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Net.Sockets;
+using Discord;
 using Discord.WebSocket;
 
 namespace firstDiscord.Net;
@@ -7,12 +8,12 @@ namespace firstDiscord.Net;
 public class ServerCommands
 {
     private static Process ServerProcess;
-    public static async Task ServerCommandsHandler(SocketSlashCommand command)
+    public static async Task ServerCommandsHandler(SocketSlashCommand command, IMessageChannel messageChannel)
     {
         switch (command.Data.Options.First().Name)
         {
             case "start":
-                await StartServerCommand(command);
+                await StartServerCommand(command, messageChannel);
                 break;
             case "stop":
                 await StopServerCommand(command);
@@ -20,16 +21,12 @@ public class ServerCommands
         }
     }
 
-    private static async Task StartServerCommand(SocketSlashCommand command)
+    private static async Task StartServerCommand(SocketSlashCommand command, IMessageChannel messageChannel)
     {
         if (ServerProcess == null)
         {
            ServerProcess = Process.Start(initializeServerProcess());
-           ServerProcess.Exited += (a, aa) =>
-           {
-                Console.WriteLine($"Existed {a.ToString()}");
-                ServerProcess = null;
-           };
+           ServerProcess.Exited += ifProcessExited;
            command.RespondAsync("起動開始しました");
         }
         else
@@ -39,6 +36,12 @@ public class ServerCommands
                 await command.RespondAsync("すでに起動しています");
             }
         }
+    }
+
+    public static void ifProcessExited(object? sender, EventArgs e)
+    {
+        Console.WriteLine($"Existed {e.ToString()}");
+        ServerProcess = null;
     }
 
     static ProcessStartInfo initializeServerProcess()

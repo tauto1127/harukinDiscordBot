@@ -86,7 +86,7 @@ public class Program
                 await PipeChannelCommands.PipeChannelCommandHandler(command, _context);
                 break;
             case "server":
-                await ServerCommands.ServerCommandsHandler(command);
+                await ServerCommands.ServerCommandsHandler(command, _client.GetChannel(_appJson.textChannleId) as IMessageChannel);
                 break;
         }
     }    
@@ -119,6 +119,7 @@ public class AppJson
 {
     public string token { get; set; }
     public ulong guildId { get; set; }
+    public ulong textChannleId { get; set; }
     public bool isInit { get; set; }
     public bool isReset { get; set; }
     public string processWorkingDirectory { get; set; }
@@ -148,6 +149,7 @@ public class AppJson
             token = dictionary["token"],
             isInit = Boolean.Parse(dictionary["initialize"]),
             guildId = ulong.Parse(dictionary["guildid"]),
+            textChannleId = ulong.Parse(dictionary["textchannelid"]),
             isReset = Boolean.Parse(dictionary["commandreset"]),
             processWorkingDirectory = dictionary["ProcessWorkingDirectory"],
             processName = dictionary["ProcessName"],
