@@ -21,7 +21,7 @@ public class SlashCommandInitializer
         //await FeedbackCommand();
         await WayPointCommands();
         await WebBookmarkCommands();
-        //await PipeChannelCommands();
+        await PipeChannelCommands();
         await WebBookmarkCommands2();
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
@@ -326,6 +326,16 @@ public class SlashCommandInitializer
                     .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
                     .AddOption("num", ApplicationCommandOptionType.Number, "番号", isRequired: true)
                     .AddOption("description", ApplicationCommandOptionType.String, "説明")
+                    .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類", 
+                        choices:new[]
+                        {
+                            new ApplicationCommandOptionChoiceProperties() { Name = "lava", Value = PipeType.溶岩.ToString() },//ここを"PipeType.溶岩"にすると登録されない
+                            new ApplicationCommandOptionChoiceProperties(){Name = "water", Value = PipeType.水.ToString()},
+                            new ApplicationCommandOptionChoiceProperties(){Name = "goldoil", Value = PipeType.オイル.ToString()},
+                            new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = PipeType.金オイル.ToString()},
+                            new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = PipeType.重油.ToString()}
+                        }
+                    )
                 )
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("showwebbookmarks")
