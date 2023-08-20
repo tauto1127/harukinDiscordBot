@@ -21,8 +21,7 @@ public class SlashCommandInitializer
         //await FeedbackCommand();
         await WayPointCommands();
         await WebBookmarkCommands();
-        //await PipeChannelCommands();
-        await WebBookmarkCommands2();
+        await PipeChannelCommands();
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
 
@@ -171,29 +170,30 @@ public class SlashCommandInitializer
     private async Task WayPointCommands()
     {
         SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
-            .WithName("waypoint")
-            .WithDescription("ウェイポイント管理用")
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("addwaypoint")
-                .WithDescription("ウェイポイントを追加")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("waypointname", ApplicationCommandOptionType.String, "ウェイポイントの名前", isRequired:true)
-                .AddOption("x", ApplicationCommandOptionType.Number, "ウェイポイントのx座標", isRequired:true)
-                .AddOption("y", ApplicationCommandOptionType.Number, "ウェイポイントのy座標", isRequired:true)
-                .AddOption("z", ApplicationCommandOptionType.Number, "ウェイポイントのz座標", isRequired:true)
-                .AddOption("description", ApplicationCommandOptionType.String, "ウェイポイントの説明(not required)", isRequired:false)
-            )
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("showwaypoint")
-                .WithDescription("ウェイポイント一覧を表示")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-            )
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("deletewaypoint")
-                .WithDescription("ウェイポイントを削除")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("id", ApplicationCommandOptionType.Integer, "ウェイポイントID", isRequired:true)
-            )
+                .WithName("waypoint")
+                .WithDescription("ウェイポイント管理用")
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("addwaypoint")
+                    .WithDescription("ウェイポイントを追加")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("waypointname", ApplicationCommandOptionType.String, "ウェイポイントの名前", isRequired: true)
+                    .AddOption("x", ApplicationCommandOptionType.Number, "ウェイポイントのx座標", isRequired: true)
+                    .AddOption("y", ApplicationCommandOptionType.Number, "ウェイポイントのy座標", isRequired: true)
+                    .AddOption("z", ApplicationCommandOptionType.Number, "ウェイポイントのz座標", isRequired: true)
+                    .AddOption("description", ApplicationCommandOptionType.String, "ウェイポイントの説明(not required)",
+                        isRequired: false)
+                )
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("showwaypoint")
+                    .WithDescription("ウェイポイント一覧を表示")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("deletewaypoint")
+                    .WithDescription("ウェイポイントを削除")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("id", ApplicationCommandOptionType.Integer, "ウェイポイントID", isRequired: true)
+                )
             ;
         try
         {
@@ -208,124 +208,15 @@ public class SlashCommandInitializer
     private async Task WebBookmarkCommands()
     {
         SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
-            .WithName("webbookmark")
-            .WithDescription("ウェブブックマーク管理用")
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("addwebbookmark")
-                .WithDescription("ウェブブックマークを追加")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("webbookmarkname", ApplicationCommandOptionType.String, "ブックマークの名前", isRequired: true)
-                .AddOption("url", ApplicationCommandOptionType.String, "URL", isRequired: true)
-                .AddOption("description", ApplicationCommandOptionType.String, "ブックマークの説明")
-            )
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("showwebbookmarks")
-                .WithDescription("ウェブブックマーク一覧を表示")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-            )
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("deletewebbookmark")
-                .WithDescription("ウェブブックマークを削除")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("id", ApplicationCommandOptionType.Integer, "ID", isRequired: true)
-            )
-            ;
-        try
-        {
-            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-    }
-
-    private async Task PipeChannelCommands()
-    {
-        /*
-        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
-            .WithName("pipe")
-            .WithDescription("パイプチャンネル管理用")
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("add")
-                .WithDescription("チャンネル追加")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
-                .AddOption("num", ApplicationCommandOptionType.Number, "番号", isRequired: true)
-                .AddOption("description", ApplicationCommandOptionType.String, "説明")
-                .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類", 
-                    choices:new[]
-                    {
-                        new ApplicationCommandOptionChoiceProperties(){Name = "lava", Value = PipeType.溶岩},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "water", Value = PipeType.水},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "goldoil", Value = PipeType.オイル},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = PipeType.金オイル},
-                        new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = PipeType.重油}
-                    })
-            )
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("show")
-                .WithDescription("チャンネル表示")
-                .WithType(ApplicationCommandOptionType.SubCommand)
-            )
-            ;
-        try
-        {
-            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
-            Console.WriteLine("実行された");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }*/
-        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
-                .WithName("pipe")
-                .WithDescription("テレポートパイプ管理用")
-                /*
+                .WithName("webbookmark")
+                .WithDescription("ウェブブックマーク管理用")
                 .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("add")
-                    .WithDescription("チャンネル追加")
+                    .WithName("addwebbookmark")
+                    .WithDescription("ウェブブックマークを追加")
                     .WithType(ApplicationCommandOptionType.SubCommand)
-                    .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
-                    .AddOption("num", ApplicationCommandOptionType.Number, "番号", isRequired: true)
-                    .AddOption("description", ApplicationCommandOptionType.String, "説明")
-                    .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類", 
-                        choices:new[]
-                        {
-                            new ApplicationCommandOptionChoiceProperties(){Name = "lava", Value = PipeType.溶岩},
-                            new ApplicationCommandOptionChoiceProperties(){Name = "water", Value = PipeType.水},
-                            new ApplicationCommandOptionChoiceProperties(){Name = "goldoil", Value = PipeType.オイル},
-                            new ApplicationCommandOptionChoiceProperties(){Name = "oil", Value = PipeType.金オイル},
-                            new ApplicationCommandOptionChoiceProperties(){Name = "heavy oil", Value = PipeType.重油}
-                        })
-                )*/
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("show")
-                    .WithDescription("チャンネル一覧を表示")
-                    .WithType(ApplicationCommandOptionType.SubCommand)
-                )
-            ;
-        try
-        {
-            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-    }
-    private async Task WebBookmarkCommands2()
-    {
-        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
-                .WithName("pipe")
-                .WithDescription("テレポートパイプ管理用")
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("add")
-                    .WithDescription("チャンネル追加")
-                    .WithType(ApplicationCommandOptionType.SubCommand)
-                    .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
-                    .AddOption("num", ApplicationCommandOptionType.Number, "番号", isRequired: true)
-                    .AddOption("description", ApplicationCommandOptionType.String, "説明")
+                    .AddOption("webbookmarkname", ApplicationCommandOptionType.String, "ブックマークの名前", isRequired: true)
+                    .AddOption("url", ApplicationCommandOptionType.String, "URL", isRequired: true)
+                    .AddOption("description", ApplicationCommandOptionType.String, "ブックマークの説明")
                 )
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("showwebbookmarks")
@@ -335,6 +226,54 @@ public class SlashCommandInitializer
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("deletewebbookmark")
                     .WithDescription("ウェブブックマークを削除")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("id", ApplicationCommandOptionType.Integer, "ID", isRequired: true)
+                )
+            ;
+        try
+        {
+            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+    private async Task PipeChannelCommands()
+    {
+        IReadOnlyList<string> pipeTypeEnums = PipeTypeEnum.GetEnums();
+        ApplicationCommandOptionChoiceProperties[] typeChoices =
+            new ApplicationCommandOptionChoiceProperties[pipeTypeEnums.Count];
+        ;
+        for (int i = 0; i < pipeTypeEnums.Count; i++)
+        {
+            Console.WriteLine($"名前：{pipeTypeEnums[i]}、値：{pipeTypeEnums[i]}");
+            typeChoices[i] = new ApplicationCommandOptionChoiceProperties()
+                { Name = pipeTypeEnums[i], Value = pipeTypeEnums[i] };
+        }
+
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+                .WithName("pipe")
+                .WithDescription("テレポートパイプ管理用")
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("add")
+                    .WithDescription("チャンネル追加")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                    .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
+                    .AddOption("num", ApplicationCommandOptionType.Number, "チャンネル番号", isRequired: true)
+                    .AddOption("description", ApplicationCommandOptionType.String, "説明")
+                    .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類",
+                        choices: typeChoices
+                    )
+                )
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("shows")
+                    .WithDescription("一覧を表示")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("delete")
+                    .WithDescription("削除")
                     .WithType(ApplicationCommandOptionType.SubCommand)
                     .AddOption("id", ApplicationCommandOptionType.Integer, "ID", isRequired: true)
                 )

@@ -15,7 +15,7 @@ public class PipeChannelCommands
             case "add":
                 await AddPipeChannel(command, _context);
                 break;
-            case "show":
+            case "shows":
                 await ShowPipeChannels(command, _context);
                 break;
         }
@@ -53,7 +53,7 @@ public class PipeChannelCommands
         string output = "";
         foreach (var VARIABLE in _context.TeleportChannels)
         {
-            output += $"{VARIABLE.Id}：{VARIABLE.Name}({VARIABLE.Channel}[{VARIABLE.Type}]) \n>{VARIABLE.Description}\n";
+            output += $"{VARIABLE.Id}：{VARIABLE.Name} (Channel:{VARIABLE.Channel}, Type:{VARIABLE.Type}) \n> {VARIABLE.Description}\n";
         }
 
         command.RespondAsync(output);
