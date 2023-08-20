@@ -17,7 +17,7 @@ public class Program
     
     private DiscordSocketClient _client;
     private SocketGuild _guild;
-    private AppJson _appJson;
+    public static AppJson? _appJson;
     private string _token;
     public static Task Main(string[] args) 
         => new Program().MainAsync();
@@ -114,13 +114,18 @@ public class Program
         Console.ForegroundColor = origin;
     }
 }
-class AppJson
+
+public class AppJson
 {
     public string token { get; set; }
     public ulong guildId { get; set; }
     public bool isInit { get; set; }
     public bool isReset { get; set; }
-    public static AppJson GetJson(string fileName)
+    public string processWorkingDirectory { get; set; }
+    public string processName { get; set; }
+    public string processArgs { get; set; }
+
+    public static AppJson? GetJson(string fileName)
     {
         string jsonString = "";
         try
@@ -143,7 +148,10 @@ class AppJson
             token = dictionary["token"],
             isInit = Boolean.Parse(dictionary["initialize"]),
             guildId = ulong.Parse(dictionary["guildid"]),
-            isReset = Boolean.Parse(dictionary["commandreset"])
+            isReset = Boolean.Parse(dictionary["commandreset"]),
+            processWorkingDirectory = dictionary["ProcessWorkingDirectory"],
+            processName = dictionary["ProcessName"],
+            processArgs = dictionary["ProcessArguments"],
         };
     }
 }

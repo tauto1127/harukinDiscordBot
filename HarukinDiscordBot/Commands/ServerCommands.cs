@@ -25,7 +25,12 @@ public class ServerCommands
         if (ServerProcess == null)
         {
            ServerProcess = Process.Start(initializeServerProcess());
-           command.RespondAsync("started");
+           ServerProcess.Exited += (a, aa) =>
+           {
+                Console.WriteLine($"Existed {a.ToString()}");
+                ServerProcess = null;
+           };
+           command.RespondAsync("起動開始しました");
         }
         else
         {
@@ -39,12 +44,12 @@ public class ServerCommands
     static ProcessStartInfo initializeServerProcess()
     {
         ProcessStartInfo psInfo = new ProcessStartInfo();
-        psInfo.FileName = "dotnet"; //コマンド
-        psInfo.Arguments = "run"; //引数
+        psInfo.FileName = Program._appJson.processName; //コマンド
+        psInfo.Arguments = Program._appJson.processArgs; //引数
         psInfo.CreateNoWindow = true; // コンソール・ウィンドウを開かない
         psInfo.UseShellExecute = false; // シェル機能を使用しない
         psInfo.RedirectStandardOutput = true; // 標準出力をリダイレクト
-        psInfo.WorkingDirectory = "/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands";
+        psInfo.WorkingDirectory = Program._appJson.processWorkingDirectory;
         return psInfo;
     }
 
