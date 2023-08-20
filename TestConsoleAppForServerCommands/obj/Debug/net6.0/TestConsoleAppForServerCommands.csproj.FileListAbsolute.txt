@@ -1,0 +1,15 @@
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.csproj.AssemblyReference.cache
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.GeneratedMSBuildEditorConfig.editorconfig
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.AssemblyInfoInputs.cache
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.AssemblyInfo.cs
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.csproj.CoreCompileInputs.cache
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/bin/Debug/net6.0/TestConsoleAppForServerCommands
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/bin/Debug/net6.0/TestConsoleAppForServerCommands.deps.json
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/bin/Debug/net6.0/TestConsoleAppForServerCommands.runtimeconfig.json
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/bin/Debug/net6.0/TestConsoleAppForServerCommands.dll
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/bin/Debug/net6.0/ref/TestConsoleAppForServerCommands.dll
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/bin/Debug/net6.0/TestConsoleAppForServerCommands.pdb
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.dll
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/ref/TestConsoleAppForServerCommands.dll
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.pdb
+/home/takuto1127/Rider/harukinDiscordBot/TestConsoleAppForServerCommands/obj/Debug/net6.0/TestConsoleAppForServerCommands.genruntimeconfig.cache
