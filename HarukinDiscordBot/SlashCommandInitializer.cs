@@ -22,6 +22,7 @@ public class SlashCommandInitializer
         await WayPointCommands();
         await WebBookmarkCommands();
         await PipeChannelCommands();
+        await ServerCommands();
         Console.WriteLine("スラッシュコマンドInitialize完了");
     }
 
@@ -276,6 +277,33 @@ public class SlashCommandInitializer
                     .WithDescription("削除")
                     .WithType(ApplicationCommandOptionType.SubCommand)
                     .AddOption("id", ApplicationCommandOptionType.Integer, "ID", isRequired: true)
+                )
+            ;
+        try
+        {
+            _guild.CreateApplicationCommandAsync(slashCommandBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    
+    private async Task ServerCommands()
+    {
+        SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
+                .WithName("server")
+                .WithDescription("サーバー管理用")
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("start")
+                    .WithDescription("マイクラサーバーを開始")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
+                )
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("stop")
+                    .WithDescription("マイクラサーバーを停止")
+                    .WithType(ApplicationCommandOptionType.SubCommand)
                 )
             ;
         try
