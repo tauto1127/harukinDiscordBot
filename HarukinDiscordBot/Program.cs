@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -20,6 +21,7 @@ public class Program
     private string _token;
     public static Task Main(string[] args) 
         => new Program().MainAsync();
+
 
     private readonly AppDbContext _context = new AppDbContext();
     public async Task MainAsync()
@@ -51,6 +53,8 @@ public class Program
             }else{WriteLineColor("Initializeしません", ConsoleColor.Yellow);}
         };
         
+
+        
         await _client.LoginAsync(TokenType.Bot, _token);
         await _client.StartAsync();
         
@@ -80,6 +84,9 @@ public class Program
                 break;
             case "pipe":
                 await PipeChannelCommands.PipeChannelCommandHandler(command, _context);
+                break;
+            case "server":
+                await ServerCommands.ServerCommandsHandler(command);
                 break;
         }
     }    
