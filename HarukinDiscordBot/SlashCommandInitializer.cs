@@ -250,7 +250,7 @@ public class SlashCommandInitializer
         {
             Console.WriteLine($"名前：{pipeTypeEnums[i]}、値：{pipeTypeEnums[i]}");
             typeChoices[i] = new ApplicationCommandOptionChoiceProperties()
-                { Name = pipeTypeEnums[i], Value = pipeTypeEnums[i] };
+                { Name = pipeTypeEnums[i].ToString(), Value = pipeTypeEnums[i].ToString() };
         }
 
         SlashCommandBuilder slashCommandBuilder = new SlashCommandBuilder()
@@ -263,8 +263,8 @@ public class SlashCommandInitializer
                     .AddOption("name", ApplicationCommandOptionType.String, "名前", isRequired: true)
                     .AddOption("num", ApplicationCommandOptionType.Number, "チャンネル番号", isRequired: true)
                     .AddOption("description", ApplicationCommandOptionType.String, "説明")
-                    .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類",
-                        choices: typeChoices
+                    .AddOption("type", ApplicationCommandOptionType.String, "(液体)種類", choices: typeChoices
+                        
                     )
                 )
                 .AddOption(new SlashCommandOptionBuilder()

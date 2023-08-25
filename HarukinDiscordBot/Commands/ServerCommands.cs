@@ -23,7 +23,7 @@ public class ServerCommands
 
     private static async Task StartServerCommand(SocketSlashCommand command, IMessageChannel messageChannel)
     {
-        if (ServerProcess == null)
+        if (ServerProcess == null || ServerProcess.HasExited)
         {
            ServerProcess = Process.Start(initializeServerProcess());
            ServerProcess.Exited += ifProcessExited;
@@ -40,7 +40,7 @@ public class ServerCommands
 
     public static void ifProcessExited(object? sender, EventArgs e)
     {
-        Console.WriteLine($"Existed {e.ToString()}");
+        Console.WriteLine($"イベント発火Existed {e.ToString()}");
         ServerProcess = null;
     }
 
@@ -58,12 +58,28 @@ public class ServerCommands
 
     private static async Task StopServerCommand(SocketSlashCommand command)
     {
-        Console.WriteLine(await ServerProcess.StandardOutput.ReadLineAsync());
-        command.RespondAsync("end");
-    }
-
-    private static async Task aaa()
-    {
-        Console.WriteLine(ServerProcess.StandardOutput.ReadLine());
+        if (ServerProcess != null)
+        {
+            if (ServerProcess.HasExited)
+            {
+                command.RespondAsync($"すでに停止しています");
+            }
+            else
+            {
+                try
+                {
+                    ServerProcess.Kill();
+                    command.RespondAsync("停止しました。");
+                }
+                catch (Exception e)
+                {
+                    command.RespondAsync(e.ToString().Substring(0, 2000));
+                }
+            }
+        }
+        else
+        {
+            command.RespondAsync("停止済(process null)");
+        }
     }
 }
